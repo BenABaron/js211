@@ -17,14 +17,23 @@ const displayDate = () => {
 const numToString = (x) => {
   let number = x
   str = number.toString()
-  console.log(str)
+  console.log(`${str} is now a string!`)
 }
+
+numToString(22)
+numToString(11)
+numToString(213425)
+numToString(1)
 // Write a JavaScript program to convert a string to the number.
 const stringToNum = (y) => {
   let string = y
   num = Number(string)
   console.log(num)
 }
+
+stringToNum("53")
+stringToNum("1")
+stringToNum("123457")
 
 // Write a JavaScript program that takes in different datatypes and prints out whether they are a:
   // * Boolean
@@ -33,35 +42,59 @@ const stringToNum = (y) => {
   // * Number
   // * NaN
   // * String
-  
 
+function checkDataType(x) {
+  let type = typeof(x)
+  console.log(type)
+}
+
+checkDataType(true)
+checkDataType(null)
+checkDataType()
+checkDataType(15)
+checkDataType(NaN)
+checkDataType("hello")
   
 // Write a JavaScript program that adds 2 numbers together.
 const addTwoNumbers = (a,b) => {
   sum = a + b
-  console.log(sum)
+  console.log(`The sum of ${a} and ${b} is ${sum}!`)
 }
 
+addTwoNumbers(5,2)
+addTwoNumbers(51,32)
+addTwoNumbers(5532,2123)
+addTwoNumbers(1,8)
 
 // Write a JavaScript program that runs only when 2 things are true.
 const bothTrue = (a,b) => {
   if (a && b ) {
     console.log("They're both true! Yay!")
   } else {
+    console.log("They're not both true ):")
   }
 }
 
+bothTrue(1,-1)
+bothTrue(true, true)
+bothTrue(true, false)
+bothTrue(null, true)
 
 // Write a JavaScript program that runs when 1 of 2 things are true.
 const oneTrue = (a,b) => {
   if (a && b) {
-    console.log("):")
+    console.log("oneTrue failed")
   } else if (a || b) {
     console.log("Only one is true!")
   } else {
-    console.log("):")
+    console.log("oneTrue Failed")
   }
 }
+
+oneTrue(1,-1)
+oneTrue(true, true)
+oneTrue(true, false)
+oneTrue(null, true)
 
 
 // Write a JavaScript program that runs when both things are not true.  
@@ -69,8 +102,14 @@ const bothFalse = (a,b) => {
   if (!a && !b) {
     console.log("Neither are true! Yay!")
   } else {
+    console.log("At least one was true ):")
   }
 }
+
+bothFalse(1,-1)
+bothFalse(false, false)
+bothFalse(true, false)
+bothFalse(null, false)
 // ***************************
 //         PART TWO
 // ***************************
