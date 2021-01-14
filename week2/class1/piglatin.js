@@ -12,10 +12,126 @@ const rl = readline.createInterface({
 
 // put functions from class here
 
+function smallestNonNegative(num1, num2){
+  if (num1<0) {
+    return num2
+  } 
+  
+  if (num2<0) {
+    return num1
+  }
+  
+  if (num1<num2) {
+    return num1
+  } else {
+    return num2
+  }
+  
+}
+
+// b e n e n o
+// 0 1 2 3 4 5
+
+let indexOfFirstVowel = function(word) {
+  // first fine the indexes of all vowels
+  // compare vowels one at time, carrying the smaller indexed vowel
+  let aIndex = word.indexOf("a")
+  let eIndex = word.indexOf("e")
+  let iIndex = word.indexOf("i")
+  let oIndex = word.indexOf("o")
+  let uIndex = word.indexOf("u")
+
+  let vowelArray = [aIndex, eIndex, iIndex, oIndex, uIndex]
+
+  let vowel = -1
+
+  for (let x = 0; x < vowelArray.length; x++) {
+    vowel = smallestNonNegative(vowel, vowelArray[x])
+  }
+
+  return vowel
+}
+
+/**
+ * RULES:
+ * 
+ * if the word starts with a vowel, add -yay to the end
+ * EX: egg -> eggyay; elephant -> elephantyay
+ * 
+ * if the word has a vowel, then split the word in to 2 parts at the vowel
+ * then swap the 2 parts, then add -ay to the end
+ * EX: fox -> f + ox -> oxf -> oxfay
+ *     conditional -> c + onditional -> onditionalc -> onditionalcay
+ * 
+ * if the word has no vowel, then add -ay to the end
+ * EX: tsk -> tskay; pftt -> pfttay
+ * 
+ */
+
+/**
+ * ORDER OF OPERATIONS:
+ * 
+ * First, lowercase and remove spaces from input
+ * Second, fine the index of the first vowel of the word. Then,
+ * - if the index = 0, add "yay" to the end of the word
+ * - if the index = -1, add "ay" to the end of the word
+ * - if the index > 0, then,
+ * -- get substring from 0 to vowelIndex, and substring from vowelIndex to end of word
+ * -- Take substrings and put end of word before beginning of word
+ * -- add "ay" to the end of the new string
+ * 
+ */
+
 const pigLatin = (word) => {
 
-  // Your code here
-  return 'eggyay'
+  // Lowercase and remove spaces from input
+  function scrubInput(str) {
+    str = str.toLowerCase();
+    str = str.replace(/ /g, '')
+    return str
+  }
+
+  word = scrubInput(word)
+
+  // Find the index of the first vowel, store in a variable
+
+  let firstVowelIndex = indexOfFirstVowel(word)
+
+  // if the index = 0, add "yay" to the end of the word
+
+  if (firstVowelIndex === 0) {
+    word = word.concat("yay")
+  }
+
+  // if the index = -1, add "ay" to the od of the word
+
+  if (firstVowelIndex === -1) {
+    word = word.concat("ay")
+  }
+
+  // if the index > 0, then,
+
+  if (firstVowelIndex > 0) {
+
+  // -- get substring from 0 to vowelIndex, and substring from vowelIndex to end of word
+
+  let part1 = word.substring(0, firstVowelIndex)
+  let part2 = word.substring(firstVowelIndex)
+
+  // -- Take substrings and put end of word before beginning of word
+
+  let flippedWord = part2.concat(part1)
+
+  // -- add "ay" to the end of the new string
+
+  word = flippedWord.concat("ay")
+
+  }
+
+  // return the changed string
+
+  return word
+
 }
 
 // the first function called in the program to get an input from the user

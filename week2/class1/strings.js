@@ -107,13 +107,13 @@ console.log(indexOfFirstVowel(word2))
 console.log(indexOfFirstVowel(word3))
 console.log(indexOfFirstVowel(word4))
 
-let word5 = "conditional"
+// let word5 = "conditional"
 
-let part1 = word5.substring(3, 6)
-console.log(part1)
+// let part1 = word5.substring(3, 6)
+// console.log(part1)
 
-let part2 = word5.substring(2)
-console.log(part2)
+// let part2 = word5.substring(2)
+// console.log(part2)
 
 // we have a function that can find the position of the first vowel
 // we have a method that can be used to split the word, at an index
