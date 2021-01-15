@@ -71,8 +71,9 @@ let indexOfFirstVowel = function(word) {
 /**
  * ORDER OF OPERATIONS:
  * 
- * First, lowercase and remove spaces from input
- * Second, fine the index of the first vowel of the word. Then,
+ * *Put all words into an array*
+ * First, lowercase and remove spaces from array values
+ * Second, fine the index of the first vowel of each word. Then,
  * - if the index = 0, add "yay" to the end of the word
  * - if the index = -1, add "ay" to the end of the word
  * - if the index > 0, then,
@@ -82,57 +83,75 @@ let indexOfFirstVowel = function(word) {
  * 
  */
 
+
 const pigLatin = (word) => {
 
-  // Lowercase and remove spaces from input
+  // put all words into an array
+
+  let wordArray = word.split(" ")
+
+  wordArray = wordArray.filter(Boolean)
+
+  // Lowercase and remove spaces from array values
   function scrubInput(str) {
     str = str.toLowerCase();
     str = str.replace(/ /g, '')
     return str
   }
 
-  word = scrubInput(word)
-
-  // Find the index of the first vowel, store in a variable
-
-  let firstVowelIndex = indexOfFirstVowel(word)
-
-  // if the index = 0, add "yay" to the end of the word
-
-  if (firstVowelIndex === 0) {
-    word = word.concat("yay")
+  for (let i = 0; i < wordArray.length; i++) {
+    wordArray[i] = scrubInput(wordArray[i])
   }
+  
+  for (let i = 0; i < wordArray.length; i++) {
+    
+    // Find the index of the first vowel, store in a variable
+    
+    let firstVowelIndex = indexOfFirstVowel(wordArray[i])
 
-  // if the index = -1, add "ay" to the od of the word
+    // if the index = 0, add "yay" to the end of the word
 
-  if (firstVowelIndex === -1) {
-    word = word.concat("ay")
-  }
+    if (firstVowelIndex === 0) {
+      wordArray[i] = wordArray[i].concat("yay")
+    }
 
-  // if the index > 0, then,
+    // if the index = -1, add "ay" to the od of the word
 
-  if (firstVowelIndex > 0) {
+    if (firstVowelIndex === -1) {
+      wordArray[i] = wordArray[i].concat("ay")
+    }
 
-  // -- get substring from 0 to vowelIndex, and substring from vowelIndex to end of word
+    // if the index > 0, then,
 
-  let part1 = word.substring(0, firstVowelIndex)
-  let part2 = word.substring(firstVowelIndex)
+    if (firstVowelIndex > 0) {
 
-  // -- Take substrings and put end of word before beginning of word
+    // -- get substring from 0 to vowelIndex, and substring from vowelIndex to end of word
 
-  let flippedWord = part2.concat(part1)
+    let part1 = wordArray[i].substring(0, firstVowelIndex)
+    let part2 = wordArray[i].substring(firstVowelIndex)
 
-  // -- add "ay" to the end of the new string
+    // -- Take substrings and put end of word before beginning of word
 
-  word = flippedWord.concat("ay")
+    let flippedWord = part2.concat(part1)
+
+    // -- add "ay" to the end of the new string
+
+    wordArray[i] = flippedWord.concat("ay")
+
+    }
 
   }
 
   // return the changed string
 
+  word = wordArray.toString()
+
+  word = word.replace(/,/g, ' ')
+
   return word
 
 }
+
 
 // the first function called in the program to get an input from the user
 // to run the function use the command: node main.js

@@ -49,8 +49,8 @@ let same3 = function(fruit) {
 */
 
 let board = [
-    [ 'X', 'O', 'X']
-    [ 'O', 'X', 'O']
+    [ 'X', 'O', 'X'],
+    [ 'O', 'X', 'O'],
     [ ' ', ' ', 'X']
 ]
 
