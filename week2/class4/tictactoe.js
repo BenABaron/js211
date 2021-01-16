@@ -34,18 +34,75 @@ const printBoard = () => {
 
 const horizontalWin = () => {
   // Your code here to check for horizontal wins
+
+  /**
+   * Access one row of the board
+   * check if all values are the same AND not empty
+   * If true, you win
+   * do this for all rows
+   */
+
+  for (let i = 0; i < board.length; i++) {
+    if (board[i][0] === board[i][1] && board[i][1] === board[i][2] && board[i][0] != ' ') {
+      return true
+    }
+  }
+
+  return false
+
 }
 
 const verticalWin = () => {
   // Your code here to check for vertical wins
+
+  /**
+   * Access the same index off all rows
+   * check if all values are the same AND not empty
+   * If true, you win
+   * do this for index 0, 1, and 2 of all rows
+   */
+
+  for (let i = 0; i < board.length; i++) {
+    if (board[0][i] === board[1][i] && board[1][i] === board[2][i] && board[0][i] != ' ') {
+      return true
+    }
+  }
+
+  return false
+
 }
 
 const diagonalWin = () => {
   // Your code here to check for diagonal wins
+
+  /**
+   * More specific, only applies if one of the following is the same value -
+   * [0][0] === [1][1] === [2][2] OR [0][2] === [1][1] === [2][0]
+   * If true, you win
+   */
+
+  if (board[0][0] === board[1][1] && board[1][1] === board[2][2] && board[0][0] != ' ') {
+    return true
+  }
+
+  if (board[0][2] === board[1][1] && board[1][1] === board[2][0] && board[0][2] != ' ') {
+    return true
+  }
+
+  return false
+
+
 }
 
 const checkForWin = () => {
   // Your code here call each of the check for types of wins
+
+  if (horizontalWin() || verticalWin() || diagonalWin) {
+    return true
+  }
+
+  return false
+
 }
 
 const ticTacToe = (row, column) => {
@@ -56,6 +113,25 @@ const ticTacToe = (row, column) => {
   // 2. check if they won
   // 3. if they won, print a nice message
   // 4. if they did not win, flip player turn
+
+  // UPDATE THE BOARD
+
+  board[row][column] = playerTurn
+
+  // CHECK IF THEY WON, PRINT A NICE MESSAGE IF TRUE
+
+  if (checkForWin() == true) {
+    console.log(`Congratulations! ${playerTurn} won!`)
+  }
+
+  // IF THEY DID NOT WIN, FLIP PLAYER TURN
+
+  if (playerTurn === 'X') {
+    playerTurn = 'O'
+  } else {
+    playerTurn = 'X'
+  }
+
 
   // this function should flip the playerTurn variable
   // it should call the checkForWin() function

@@ -123,7 +123,7 @@ const pigLatin = (word) => {
 
     // if the index > 0, then,
 
-    if (firstVowelIndex > 0) {
+    if (firstVowelIndex > 0) {``
 
     // -- get substring from 0 to vowelIndex, and substring from vowelIndex to end of word
 
