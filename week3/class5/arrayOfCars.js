@@ -80,8 +80,72 @@ console.log(carsInReverse)
  * Use the slice method to remove Ford and Honda from the carsInReverse array and move them into a new array called removedCars.
  */
 
-let removedCars = carsInReverse.slice(1, 4)
+let removedCars = carsInReverse.slice(1, 3)
 
 console.log(removedCars)
 
 console.log(carsInReverse)
+
+// .splice()
+// Use the splice method to remove the 2nd and 3rd items in the array carsInReverse and add Ford and Honda in their place.
+
+carsInReverse.splice(1, 2, "Ford", "Honda")
+
+console.log(carsInReverse.splice(1, 2, "Ford", "Honda"))
+
+// .push()
+// Use the push method to add the types of cars that you removed using the splice method to the carsInReverse array.
+
+carsInReverse.push("Ford", "Honda")
+
+console.log(carsInReverse)
+
+// .pop()
+// Use the pop method to remove and console.log the last item in the array carsInReverse.
+
+console.log(carsInReverse.pop())
+
+carsInReverse.pop()
+
+// .shift()
+// Use the shift method to remove and console.log the first item in the array carsInReverse.
+
+console.log(carsInReverse.shift())
+
+carsInReverse.shift()
+
+// .unshift()
+// Use the unshift method to add a new type of car to the array carsInReverse.
+
+carsInReverse.unshift("Mazerati")
+
+console.log(carsInReverse)
+
+// .forEach()
+// Create an array called numbers with the following items: 23, 45, 0, 2. Write code that will add 2 to each item in the array numbers.
+
+let numbers = [23, 45, 0, 2]
+
+let newNumbers = []
+
+let biggerNums = numbers.forEach(function(num){
+  num += 2
+  newNumbers.push(num)
+})
+
+console.log(newNumbers)
+
+// .forEach() requires a function to be passed into it as its first argument. Build a function that will add 2 and then use .forEach() to pass each number into your freshly built function. const numbers = [23, 45, 0 , 2, 8, 44, 100, 1, 3, 91, 34]
+
+const numbers2 = [23, 45, 0 , 2, 8, 44, 100, 1, 3, 91, 34]
+
+newNumbers2 = []
+
+let add2 = function(num){
+  num += 2;
+  newNumbers2.push(num)
+}
+
+numbers2.forEach(add2)
+
+console.log(newNumbers2)
