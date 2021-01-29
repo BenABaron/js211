@@ -1,7 +1,16 @@
 'use strict';
 
+/**
+ * 20 pts - your code correctly moves peices - DONE
+ * 20 pts - your code correctly detects an illegal move - DONE
+ * 20 pts - your code correctly detects a win - DONE
+ * 20 pts - sufficiently understandable code comments or write up of your code - FINISH UP
+ * 20 pts - 3 new tests - NOT DONE
+ */
+
 const assert = require('assert');
 const readline = require('readline');
+const { start } = require('repl');
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
@@ -30,29 +39,114 @@ const printStacks = () => {
   console.log("c: " + stacks.c);
 }
 
-const movePiece = () => {
+const movePiece = (start, end) => {
   // Your code here
 
   // responsible for moving a piece
+  /**
+   * Needs to move the last number of the 'start' array to the end of the 'end' array
+   * This can be done with by pushing into the end array, a pop'd value of the start array
+   * however, the values given are strings, so we need to get the arrays associated with the string
+   */
+
+  let startArr = stacks[start];
+  let endArr = stacks[end];
+
+  endArr.push(startArr.pop())
 
 }
 
-const isLegal = () => {
+const isLegal = (start, end) => {
   // Your code here
 
   // checks to see if a move is legal, return true if it is.
   // illegal moves - a larger number can not be on top of a smaller number
+
+  /**
+   * Needs to check if the piece being moved is safe to put into the new array
+   * Thus, if a number is greater than the previous number in the array, it's not legal
+   * 
+   * ORDER OF OPERATIONS
+   * Access the two arrays and put them into variables
+   * Find the value of the last number in the starting array - call this "x"
+   * Find the value of the last number in the ending array - call this "y"
+   * If x < y, return true
+   * If there is nothing in the array, also return true
+   * Else, do nothing (return false)
+   */
+
+  let startArr = stacks[start];
+  let endArr = stacks[end];
+
+  let x = startArr.slice(-1);
+  let y = endArr.slice(-1);
+
+  if (!endArr[0]) {
+    return true;
+  }
+
+  if (x < y) {
+    return true;
+  }
+
+  return false;
+
 }
 
 const checkForWin = () => {
   // Your code here
 
   // return true if board is in a winning state
+
+  if (stacks.b.length == 4) {
+    return true;
+  }
+
+  if (stacks.c.length == 4) {
+    return true;
+  }  
+
+  return false;
+
 }
 
-// When is this function called? What should it do with its argument?
+/**
+ * 
+ * @param {string} startStack the stack from which a piece is being pulled from
+ * @param {string} endStack the stack which is receiving the piece
+ */
 const towersOfHanoi = (startStack, endStack) => {
   // Your code here
+
+  /**
+   * ORDER OF OPERATIONS
+   * First, check if the move is legal
+   * ** If legal, execute movePiece()
+   * ** If not legal (false), alert the user that the move is illegal
+   * Second, check for a win
+   * ** If it's a win, print a message!
+   * ** If it's not a win, do nothing
+   */
+
+  if (isLegal(startStack, endStack)) {
+    movePiece(startStack, endStack)
+  } else {
+    console.log("Illegal move! Try again!")
+  }
+
+  if(checkForWin()) {
+    console.log("Congrats! You won! Here's your winning board:")
+    console.log("a: " + stacks.a);
+    console.log("b: " + stacks.b);
+    console.log("c: " + stacks.c);
+    console.log("")
+    console.log("Play again?")
+    stacks = {
+      a: [4, 3, 2, 1],
+      b: [],
+      c: []
+    };
+  }
 
 }
 
@@ -62,9 +156,10 @@ const getPrompt = () => {
     rl.question('end stack: ', (endStack) => {
       towersOfHanoi(startStack, endStack);
       getPrompt();
-    // });
+    });
   });
 }
+
 
 // Tests
 
