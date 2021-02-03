@@ -4,8 +4,8 @@
  * 20 pts - your code correctly moves peices - DONE
  * 20 pts - your code correctly detects an illegal move - DONE
  * 20 pts - your code correctly detects a win - DONE
- * 20 pts - sufficiently understandable code comments or write up of your code - FINISH UP
- * 20 pts - 3 new tests - NOT DONE
+ * 20 pts - sufficiently understandable code comments or write up of your code - DONE
+ * 20 pts - 3 new tests - DONE
  */
 
 const assert = require('assert');
@@ -98,6 +98,15 @@ const checkForWin = () => {
 
   // return true if board is in a winning state
 
+  /**
+   * Options:
+   * Check if stacks b || c == [4, 3, 2, 1] //DIDN'T WORK
+   * Check if stacks b || c (.length) == 4 //THIS WORKS
+   */
+  if (stacks.a.length == 4) {
+    console.log("You need to move them to another stack!");
+  }
+
   if (stacks.b.length == 4) {
     return true;
   }
@@ -127,6 +136,21 @@ const towersOfHanoi = (startStack, endStack) => {
    * ** If it's a win, print a message!
    * ** If it's not a win, do nothing
    */
+
+  function scrubInput(str) {
+    str = str.toLowerCase();
+    str = str.replace(/ /g, '')
+    return str
+  }
+
+  startStack = scrubInput(startStack)
+  endStack = scrubInput(endStack)
+
+  if(startStack == "harry" && endStack == "yerawizard"){
+    console.log("I'm not a wizard! I'm just Harry!")
+    startStack = 'a'
+    endStack = 'a'
+  }
 
   if (isLegal(startStack, endStack)) {
     movePiece(startStack, endStack)
@@ -170,6 +194,14 @@ if (typeof describe === 'function') {
       towersOfHanoi('a', 'b');
       assert.deepEqual(stacks, { a: [4, 3, 2], b: [1], c: [] });
     });
+    it('should clear spaces from the input', () => {
+      towersOfHanoi('   a', '  b    ');
+      assert.deepEqual(stacks, { a: [4, 3, 2], b: [1], c: [] });
+    });
+    it('should lowercase the input', () => {
+      towersOfHanoi('A', 'B');
+      assert.deepEqual(stacks, { a: [4, 3, 2], b: [1], c: [] });
+    });
   });
 
   describe('#isLegal()', () => {
@@ -195,6 +227,10 @@ if (typeof describe === 'function') {
       stacks = { a: [], b: [4, 3, 2, 1], c: [] };
       assert.equal(checkForWin(), true);
       stacks = { a: [1], b: [4, 3, 2], c: [] };
+      assert.equal(checkForWin(), false);
+    });
+    it('should not allow a win on stack "a"', () => {
+      stacks = { a: [4, 3, 2, 1], b: [], c: [] };
       assert.equal(checkForWin(), false);
     });
   });
