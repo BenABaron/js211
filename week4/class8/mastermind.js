@@ -35,6 +35,14 @@ const generateHint = () =>  {
 const mastermind = (guess) => {
   solution = 'abcd'; // Comment this out to generate a random solution
   // your code here
+
+  /**
+   * check if the use guessed correctly
+   * IF they did, print out "Victory!"
+   * IF they did NOT, generate & print out the hint
+   * 
+   * If they have guessed 10 times so far, then tell them the answer
+   */
 }
 
 
