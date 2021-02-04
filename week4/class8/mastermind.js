@@ -62,49 +62,10 @@ const generateHint = (guess) =>  {
 
   return `${hintA}-${hintB}`
 
-  // console.log(solution)
-
-  // for (let i = 0; i < 4; i++) {
-  //   let guessChar = guess.charAt(i);
-
-  //   if (solution.includes(guessChar)) {
-  //     let solutionIndex = solution.indexOf(guessChar)
-
-  //     // console.log(`The solution index of ${guessChar} is ${solutionIndex}, compared to ${i}`)
-
-  //     if (solutionIndex == i) {
-  //       hintA = hintA + 1
-  //     } else {
-  //       hintB = hintB + 1
-  //     }
-  //   }
-  // }
-
-  // for (let i = 0; i < letters.length; i++) {
-  //   let currentLetter = letters[i];
-
-  //   if (guess.includes(currentLetter)) {
-  //     let guessIndex = guess.indexOf(currentLetter);
-      
-  //     if (solution.includes(currentLetter)) {
-  //       let solutionIndex = solution.indexOf(currentLetter)
-  
-  //       console.log(`The solution index of ${currentLetter} is ${solutionIndex}, compared to ${guessIndex}`)
-  
-  //       if (solutionIndex == guessIndex) {
-  //         hintA = hintA + 1
-  //       } else {
-  //         hintB = hintB + 1
-  //       }
-  //     }
-
-  //   }
-  // }
-
 }
 
 const mastermind = (guess) => {
-  solution = 'gecc'; // Comment this out to generate a random solution
+  // solution = 'abcd'; // Comment this out to generate a random solution
   // your code here
 
   /**
@@ -137,7 +98,9 @@ const mastermind = (guess) => {
 
   if (board.length > 9) {
     console.log(`You lose! The solution was ${solution}.`)
-    board = []
+    board = [];
+    solution = '';
+    generateSolution();
   }
 }
 
