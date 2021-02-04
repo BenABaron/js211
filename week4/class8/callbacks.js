@@ -34,3 +34,27 @@ let fruit = ['apple', 'banana', 'clementine'];
 myForEach(fruit, function(element){
   console.log(element)
 })
+
+//*********************************
+
+let myFind = function(array, callback){
+  let result;
+  for(let i = 0; i < array.length; i++) {
+    let found = callback(this[i], i, this);
+    if (found) {
+      result = this[i];
+      break;
+    }
+  }
+  return result;
+}
+
+let numbers = [1,2,3,4,5]
+
+let myNum = numbers.find(num, function(){
+  if (num > 3) {
+    return true;
+  }
+})
+
+console.log(myNum)
