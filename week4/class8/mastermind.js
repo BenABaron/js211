@@ -92,7 +92,7 @@ const mastermind = (guess) => {
     console.log("You got it!")
     return "You guessed it!"
   } else {
-    console.log(generateHint(guess, solution))
+    console.log(generateHint(guess))
     board.push(guess);
   }
 
