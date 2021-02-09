@@ -22,6 +22,7 @@
  * 
  */
 
+// Don't have to do this, but can be done if there's extra time
 let jobs = {
   "Driver" : "Bus",
   "Pilot" : "Plane",
@@ -29,13 +30,37 @@ let jobs = {
 }
 
 class CrewMember {
-
-  constructor(/**what goes in here? */){
-    // what goes in here
+  
+  name;
+  title;
+  assignedVehicle;
+  
+  constructor(name, title){
+    this.name = name;
+    this.title = title;
   }
 
-  assignVehicle(/**what goes in here? */){
-    // what goes in here
+  assignVehicle(vehicle){
+    /**
+     * Needs to set assigned vehicle to the vehicle passed in
+     * Needs to add the crew member to the vehicle's crew on board
+     * It should only do these if the crew member is not already assigned to a vehicle
+     */
+
+    if(!this.assignedVehicle) {
+
+      this.assignedVehicle = vehicle.name;
+
+      vehicle.crewOnBoard.push(this.title);
+
+      console.log(`${this.name} has been assigned to ${vehicle.name}.`)
+
+    } else {
+
+      console.log(`${this.name} is already assigned to a vehicle!`)
+
+    }
+
   }
 
 }
@@ -44,15 +69,39 @@ class CrewMember {
 
 class Vehicle {
 
-  constructor(/**what goes in here? */){
-    // what goes in here
+  type;
+  name;
+  crewOnBoard = [];
+
+  constructor(name, type){
+    this.name = name;
+    this.type = type;
   }
 
   isReady(){
-    // what goes in here
+    /**
+     * Should check the crew member's title against the type of vehicle
+     */
+
+    for (let i = 0; i < this.crewOnBoard.length; i++) {
+
+      let currentTitle = this.crewOnBoard[i]
+
+      if (jobs[currentTitle] == this.type) {
+        console.log(`${this.name} READY!`)
+        return true;
+      }
+
+    }
+
+    console.log(`${this.name} NOT READY!`)
+    return false;
+
   }
 
 }
+
+
 
 
 
@@ -61,7 +110,7 @@ let plane2 = new Vehicle("Tiny Tim", "Plane")
 
 let train1 = new Vehicle("Thomas", "Train")
 
-let bus1 = new Vehicle("Big Red", "Bus")
+let bus = new Vehicle("Big Red", "Bus")
 
 let c1 = new CrewMember("John", "Pilot")
 let c2 = new CrewMember("Mad Max", "Engineer")
