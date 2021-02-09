@@ -37,17 +37,17 @@ myForEach(fruit, function(element){
 
 //*********************************
 
-// let myFind = function(array, callback){
-//   let result;
-//   for(let i = 0; i < array.length; i++) {
-//     let found = callback(array[i]);
-//     if (found) {
-//       result = array[i];
-//       break;
-//     }
-//   }
-//   return result;
-// }
+let myFind = function(array, callback){
+  let result;
+  for(let i = 0; i < array.length; i++) {
+    let found = callback(array[i]);
+    if (found) {
+      result = array[i];
+      break;
+    }
+  }
+  return result;
+}
 
 let numbers = [1,2,3,4,5]
 
@@ -57,11 +57,11 @@ let myNum = numbers.find(function(num){
   }
 })
 
-// let myFoundNumber = myFind(numbers, function(num){
-//   if (num > 3) {
-//     return true;
-//   }
-// })
+let myFoundNumber = myFind(numbers, function(num){
+  if (num > 3) {
+    return true;
+  }
+})
 
 console.log(myNum)
-// console.log(myFoundNumber)
+console.log(myFoundNumber)
