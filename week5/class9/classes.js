@@ -39,14 +39,30 @@ class Car {
    * @param {*} gallons number of gallons of fuel to add
    */
   addFuel(gallons){
+
+    let tankSpace = this.tankCapacity - this.fuelLevel;
+
+    if (gallons > tankSpace) {
+
+      this.fuelLevel = this.tankCapacity;
+
+      console.log(`Oh no! You spilled gas all over the ground! You got ${tankSpace} gallons into your tank though!`);
+
+    } else {
+
     this.fuelLevel = this.fuelLevel + gallons;
+
+    console.log(`Yay! You added ${gallons} gallons of gas to your tank.`)
+
+    }
+
   }
 
   /**
    * This method returns the number of miles this car can drive
    * before it runs out of gas
    */
-  range(){
+  milesToEmpty(){
     // if my car gets 26mpg, and it has 1 gallon: 26 miles
     // if my car gets 26mpg, and it has 2 gallon: 52 miles
     // if my car gets 26mpg, and it has 0.5 gallon: 13 miles
@@ -61,13 +77,39 @@ class Car {
    * @param {number} distance number of miles to drive
    */
   drive(distance){
-    this.odometer = this.odometer + distance;
 
-    let fuelUsed = distance/this.mpg;
-    this.fuelLevel = this.fuelLevel - fuelUsed;
+    if (distance > this.milesToEmpty()) {
+
+      console.log(`Ran out of gas! Could only travel ${this.milesToEmpty()} miles.`);
+
+      this.odometer = this.odometer + this.milesToEmpty();
+
+      this.fuelLevel = 0;
+
+    } else {
+
+      this.odometer = this.odometer + distance;
+
+      let fuelUsed = distance/this.mpg;
+      this.fuelLevel = this.fuelLevel - fuelUsed;
+
+      console.log(`Yay! You drove ${distance} miles!`);
+
+    } 
   }
 
 }
+
+let c1 = new Car(35, 12)
+
+c1.addFuel(7)
+c1.drive(300)
+c1.addFuel(24)
+c1.drive(30)
+c1.drive(240)
+c1.drive(300)
+
+if (typeof describe === 'function') {
 
 describe("test set 1", function(){
   it("not over fill", function(){
@@ -85,8 +127,10 @@ describe("test set 1", function(){
     c2.addFuel(2);
     c2.drive(1000)
 
-    assert.equal(c1.fuelLevel, 0);
-    assert.equal(c1.odometer, 20);
+    assert.equal(c2.fuelLevel, 0);
+    assert.equal(c2.odometer, 20);
 
   })
 })
+
+}
