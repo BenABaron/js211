@@ -28,10 +28,14 @@ const getRandomInt = (min, max) => {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+/**
+ * 
+ * @param {string} guess the current guess
+ */
 const generateHint = (guess) =>  {
 
-  let hintA = 0
-  let hintB = 0
+  let hintA = 0;
+  let hintB = 0;
 
   let guessArray = guess.split('');
   let solutionArray = solution.split('');
@@ -40,8 +44,8 @@ const generateHint = (guess) =>  {
 
     if (guessArray[index] == solutionArray[index]) {
       hintA++;
-      guessArray[index] = 0
-      solutionArray[index] = 1
+      guessArray[index] = 0;
+      solutionArray[index] = 1;
     } 
   
   })
@@ -51,16 +55,16 @@ const generateHint = (guess) =>  {
     solutionArray.forEach(function(solutionLetter, solutionIndex){
   
       if (guessLetter == solutionLetter) {
-        hintB++
-        guessArray[guessIndex] = 0
-        solutionArray[solutionIndex] = 1
+        hintB++;
+        guessArray[guessIndex] = 0;
+        solutionArray[solutionIndex] = 1;
       }
   
     })
     
   })
 
-  return `${hintA}-${hintB}`
+  return `${hintA}-${hintB}`;
 
 }
 
@@ -88,16 +92,16 @@ const mastermind = (guess) => {
    */
 
   if (guess == solution){
-    board = []
-    console.log("You got it!")
-    return "You guessed it!"
+    board = [];
+    console.log("You got it!");
+    return "You guessed it!";
   } else {
-    console.log(generateHint(guess))
+    console.log(generateHint(guess));
     board.push(guess);
   }
 
   if (board.length > 9) {
-    console.log(`You lose! The solution was ${solution}.`)
+    console.log(`You lose! The solution was ${solution}.`);
     board = [];
     solution = '';
     generateSolution();
