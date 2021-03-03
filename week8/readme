@@ -1,0 +1,40 @@
+Still need to do:
+
+API Game
+Checkpoint 2 - Dodgeball
+Checkpoint 3 - Present an idea
+Blog Post 6
+Blog Post 7
+Blog Post 8
+
+API Game
+Needs the fetch properly done
+Process the results properly
+
+Presentation
+Use a presentation via screen sharing - no holding up papers
+Idea doesn't have to be complicated
+Can you present in a way that is clear and understandable?
+What kinds of things are we storing?
+Are you prepared?
+What does the app actually look like?
+
+Dodgeball
+click list of people - show people who are signed up for the league
+Then you can accept players, don't have to accept all.
+Then you can assign them to the red or blue team
+Have to use 2 classes - player class and team class OR team member class and league member class
+3 unit tests
+REQUIREMENTS CAN BE FOUND IN LAST EMAIL FROM YOUSIF
+
+GUI
+------------------------------------
+List of people
+...
+Available Dodgeball players
+...
+Blue team
+...
+Red team
+...
+------------------------------------

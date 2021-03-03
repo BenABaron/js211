@@ -75,7 +75,6 @@ getButton.addEventListener('click', function(){
 
       
     }
-
   }
 
   console.log("After calling the API");
