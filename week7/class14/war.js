@@ -21,8 +21,13 @@ console.log("war.js connected")
 let playButton = document.getElementById('playButton');
 let drawButton = document.getElementById('drawButton');
 let compareButton = document.getElementById('compareButton');
+let checkButton = document.getElementById('checkButton');
 let currentDeck;
 
+
+
+
+// SET UP - ACQUIRE AND SPLIT THE DECK INTO TWO PILES
 playButton.addEventListener('click', function(){
 
   console.log("Play button has been pressed!");
@@ -36,18 +41,20 @@ playButton.addEventListener('click', function(){
     return response.json();
   })
 
-  // split the deck into two piles
+  // split the deck into two hands
   jsonResponse.then(function(json){
+
     currentDeck = json;
 
     console.log("Before splitting", currentDeck);
 
-    // Draw half the deck
+    // Draw half the deck for the player
     fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/draw/?count=26`)
     .then(function(response){
       return response.json();
     })
     .then(function(json){
+      // put the drawn half into the player pile
       let cards = [];
 
       for (let i = 0; i < json.cards.length; i++) {
@@ -56,16 +63,20 @@ playButton.addEventListener('click', function(){
 
       let cardsString = cards.toString();
 
-      fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/pile/playerPile/add/?cards=${cardsString}`);
+      fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/pile/playerPile/add/?cards=${cardsString}`)
+      .then(function(response){
+        return response.json();
+      });
 
     })
 
-    // Create CPU hand
+    // Draw the other half for the cpu
     fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/draw/?count=26`)
     .then(function(response){
       return response.json();
     })
     .then(function(json){
+      // put the other half into the cpu pile
       let cards = [];
 
       for (let i = 0; i < json.cards.length; i++) {
@@ -86,44 +97,195 @@ playButton.addEventListener('click', function(){
     
   })
 
-  // Split the deck
-
-  // })
-
 })
+
+
 
 
 let playerCard;
 let cpuCard;
+let pile = [];
 
-drawButton.addEventListener('click', function(){
+// GET THE TOP CARD FROM THE PLAYER PILE
+let drawPlayer = function(){
 
-  console.log("Draw button has been pressed!");
-
-  fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/pile/playerPile/draw/?count=1`)
+  fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/pile/playerPile/draw/bottom`)
   .then(function(response){
     return response.json();
   })
   .then(function(json){
     playerCard = json.cards[0].code;
-    console.log("player card drawn");
-    currentDeck = json;
-  })
+    console.log("Player drew ", playerCard);
+    pile.push(json.cards[0].code)
 
-  fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/pile/cpuPile/draw/?count=1`)
+    fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/pile/cpuPile/add/?cards=${json.cards[0].code}`)
+    .then(function(response){
+      return response.json();
+    })
+  })
+  
+}
+
+  // GET THE TOP CARD FROM THE CPU PILE
+let drawCPU = function(){
+
+  fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/pile/cpuPile/draw/bottom`)
   .then(function(response){
     return response.json();
   })
   .then(function(json){
-    cpuCard = json.cards[0].code;
-    console.log("cpu card drawn");
-    currentDeck = json;
+      cpuCard = json.cards[0].code;
+      console.log("CPU drew ", cpuCard);
+      pile.push(json.cards[0].code)
+
+      fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/pile/cpuPile/add/?cards=${json.cards[0].code}`)
+      .then(function(response){
+        return response.json();
+      })
   })
 
-})
+}
+
+// THE DRAW BUTTON ACQUIRES THE TOP CARD FROM EACH PILE
+drawButton.addEventListener('click', function(){
+  console.log("Draw button pressed!");
+  drawPlayer();
+  drawCPU();
+});
+
+
+
+
+
+// THIS IS WHERE WE CONVERT THE DRAWN CARD INTO AN INTEGER
+let cardIntParse = function(num){
+  
+    if (num == "0") {
+      return 10;
+    } else if (num == "J") {
+      return 11;
+    } else if (num == "Q") {
+      return 12;
+    } else if (num == "K") {
+      return 13;
+    } else if (num == "A") {
+      return 14;
+    } else {
+      return parseInt(num);
+    }
+
+}
+
+// SEND CARDS TO THE CORRECT HAND
+
+let playerHand;
+let cpuHand;
+
+// IF PLAYER WINS, GIVE THEM THE CARDS
+let playerWin = function(){
+  console.log("Player wins!")
+  
+  pile.forEach(function(element, i){
+    setTimeout(() => {
+      fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/pile/playerPile/add/?cards=${element}`)
+    }, i * 250)
+  })
+
+  pile = [];
+}
+
+// IF CPU WINS, GIVE THEM THE CARDS
+let cpuWin = function(){
+  console.log("CPU wins!")
+  
+  // pile.forEach(function(element){
+  //   fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/pile/cpuPile/add/?cards=${element}`)
+  // })
+  
+  pile.forEach(function(element, i){
+    setTimeout(() => {
+      fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/pile/cpuPile/add/?cards=${element}`)
+    }, i * 250)
+  })
+  
+  
+
+  pile = [];
+}
+
+// IF THERE'S A TIE
+let roundTie = function(){
+  setTimeout(() => {
+    drawPlayer();
+  }, 500);
+  setTimeout(() => {
+    drawCPU();
+  }, 500);
+  setTimeout(() => {
+    drawPlayer();
+  }, 1000);
+  setTimeout(() => {
+    drawCPU();
+  }, 1000);
+}
+
+// DISPLAY THE CURRENT HANDS
+let displayHands = function(){
+
+  fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/pile/playerPile/list/`)
+  .then(function(response){
+    return response.json();
+  })
+  .then(function(json){
+    playerHand = json.piles.playerPile.cards;
+  })
+
+  fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/pile/cpuPile/list/`)
+  .then(function(response){
+    return response.json();
+  })
+  .then(function(json){
+    cpuHand = json.piles.cpuPile.cards;
+  })
+
+  setTimeout(function(){
+    console.log("Player Hand", playerHand);
+    console.log("CPU Hand", cpuHand);
+  }, 250);
+
+}
+
+// THIS IS WHERE WE COMPARE THE CARDS
+let cardCompare = function(player, cpu){
+  
+  player = cardIntParse(player);
+  cpu = cardIntParse(cpu);
+
+  console.log("player value is ", player);
+  console.log("cpu value is ", cpu);
+
+  if (player == cpu) {
+    roundTie();
+  } else if (player > cpu) {
+    playerWin();
+  } else {
+    cpuWin();
+  }
+
+}
 
 compareButton.addEventListener('click', function(){
-  console.log("The player card drawn is ", playerCard);
-  console.log("The cpu card drawn is ", cpuCard);
-  console.log("current deck status", currentDeck);
+  console.log("The cards in the pile are ", pile);
+  
+  // get the values of the cards drawn
+  let cpuCardValue = cpuCard[0];
+  let playerCardValue = playerCard[0];
+  
+  // COMPARE THE VALUES
+  cardCompare(playerCardValue, cpuCardValue);
+
 })
+
+checkButton.addEventListener('click', function(){
+  displayHands();
+});
