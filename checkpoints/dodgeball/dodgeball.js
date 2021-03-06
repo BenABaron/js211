@@ -173,3 +173,13 @@ let addToRoster = function(){
   })
 
 }
+
+/**
+ * Couldn't figure out how to do unit tests here, but here's what I would test for!
+ * 
+ * 1. When the "Show Players" button is pressed, the ul element with id "applicants" is populated.
+ * 2. When the "Accept player" button is pressed, the player is removed from the ul elemenet with the id "applicants"
+ * 2a. The ul element with the id "acceptedPlayers" is populated by the Player that has been accepted.
+ * 3. When the "Add to blue team" button is pressed, the Player is removed from the ul element with the id "acceptedPlayers" and added to the ul element with the id "blueTeam".
+ * 3a. The same as 3, but with the "Add to red team" button moving them to the ul element with the id "redTeam".
+ */
