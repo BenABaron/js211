@@ -207,8 +207,6 @@ let cpuWin = function(){
       fetch(`https://deckofcardsapi.com/api/deck/${currentDeck.deck_id}/pile/cpuPile/add/?cards=${element}`)
     }, i * 250)
   })
-  
-  
 
   pile = [];
 }
