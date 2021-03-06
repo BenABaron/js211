@@ -5,7 +5,7 @@ console.log("dodgeball.js is connected")
 let arrOfPeople = [
   {
     name: "Ben", 
-    hobby: "Drumming"
+    hobby: "Drums"
   },
   {
     name: "Giles", 
